@@ -29,7 +29,7 @@ const TableStat = ({ url, country, statsY }) => {
 
 	return(
 		<div className="grid grid-cols-8 gap-2 items-center bg-gray-200 hover:bg-gray-400 py-4 px-6 border-b border-l border-r border-gray-400" data-country={country}>
-			<div><h2 className="text-base md:text-2xl font-bold">{country}</h2></div>
+			<div><h2 className="text-base md:text-lg font-bold">{country}</h2></div>
 			<div>{confirmed ? confirmed.value : 'N/a'}</div>
 			<div>{confirmed24}</div>
 			<div>{deaths ? deaths.value : 'N/a'}</div>
@@ -105,7 +105,7 @@ const TableStats = () => {
 		<div className="pb-16">
 			<h1 className="text-5xl py-2">COVID-19 Stats by Country</h1>
 			<input className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 mb-4 block w-full appearance-none leading-normal" type="text" placeholder="Search By Country" onChange={e => handleSearch(e)} />
-			<div className="sticky top-0 grid grid-cols-8 gap-2 items-center py-4 px-6 text-xs md:text-sm bg-gray-900 text-gray-200">
+			<div className="sticky top-0 grid grid-cols-8 gap-2 items-center py-4 px-6 text-xs md:text-sm bg-gray-900 text-gray-200 break-words md:break-normal">
 				<div><strong>Country</strong></div>
 				<div><strong>Total Confirmed</strong></div>
 				<div><strong>24h Change</strong></div>
