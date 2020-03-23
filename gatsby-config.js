@@ -13,5 +13,6 @@ module.exports = {
         pure: true,
       },
     },
+    `gatsby-plugin-postcss`,
   ],
 }
