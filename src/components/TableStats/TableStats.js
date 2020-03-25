@@ -15,6 +15,7 @@ const TableStat = ({ url, country, statsY }) => {
 
 	const yConfirmed = statsY ? statsY.confirmed : null
 	const yConfirmedTotal = yConfirmed !== null ? yConfirmed.reduce(reducer) : 'N/a'
+	console.log(yConfirmedTotal)
 	const confirmed24 = confirmed && Number.isInteger(yConfirmedTotal) ? (confirmed.value - yConfirmedTotal) : 'N/a'
 
 	const yDeaths = statsY ? statsY.deaths : null
@@ -44,7 +45,6 @@ const TableStat = ({ url, country, statsY }) => {
 const TableStats = () => {
 	const { countries, loading, error } = useCountries()
 	const [ statsY, setStatsY ] = useState([])
-
 	const today = new Date()
 	const yesterday = new Date(today)
 	yesterday.setDate(yesterday.getDate() - 1)
@@ -52,7 +52,6 @@ const TableStats = () => {
 	const mm = date => String(date.getMonth() + 1).padStart(2, '0');
 	const yyyy = date => date.getFullYear();
 	const formattedDateYesterday = `${mm(yesterday)}-${dd(yesterday)}-${yyyy(yesterday)}`
-	console.log(formattedDateYesterday)
 	const { stats } = useStats(`https://covid19.mathdro.id/api/daily/${formattedDateYesterday}`)
 
 	useEffect(() => {
@@ -66,13 +65,13 @@ const TableStats = () => {
 					output[existingIndex].deaths = output[existingIndex].deaths.concat(parseInt(item.deaths))
 					output[existingIndex].recovered = output[existingIndex].recovered.concat(parseInt(item.recovered))
 				} else {
-					if(typeof item.confirmed == 'string') {
+					if(typeof item.confirmed === 'string') {
 						item.confirmed = [parseInt(item.confirmed)]
 					}
-					if(typeof item.deaths == 'string') {
+					if(typeof item.deaths === 'string') {
 						item.deaths = [parseInt(item.deaths)]
 					}
-					if(typeof item.recovered == 'string') {
+					if(typeof item.recovered === 'string') {
 						item.recovered = [parseInt(item.recovered)]
 					}
 					output.push(item)
@@ -107,18 +106,19 @@ const TableStats = () => {
 			<input className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 mb-4 block w-full appearance-none leading-normal" type="text" placeholder="Search By Country" onChange={e => handleSearch(e)} />
 			<div className="sticky top-0 grid grid-cols-8 gap-2 items-center py-4 px-6 text-xs md:text-sm bg-gray-900 text-gray-200 break-words md:break-normal">
 				<div><strong>Country</strong></div>
-				<div><strong>Total Confirmed</strong></div>
-				<div><strong>24h Change</strong></div>
-				<div><strong>Total Deaths</strong></div>
-				<div><strong>24h Change</strong></div>
-				<div><strong>Total Recovered</strong></div>
-				<div><strong>24h Change</strong></div>
+				<div><strong>Confirmed</strong></div>
+				<div><strong>C 24h Change</strong></div>
+				<div><strong>Deaths</strong></div>
+				<div><strong>D 24h Change</strong></div>
+				<div><strong>Recovered</strong></div>
+				<div><strong>R 24h Change</strong></div>
 				<div><strong>Last Updated</strong></div>
 			</div>
 			{
-				Object.keys(countries).map( key => {
-					const countryStatsY = statsY.filter(obj => obj.countryRegion === key)
-					return <TableStat key={key} country={key} statsY={countryStatsY[0]} url={`https://covid19.mathdro.id/api/countries/${countries[key]}`} />
+				countries.map( country => {
+					const { name, iso2 } = country
+					const countryStatsY = statsY.filter(obj => obj.countryRegion === name)
+					return <TableStat key={name} country={name} statsY={countryStatsY[0]} url={`https://covid19.mathdro.id/api/countries/${iso2}`} />
 				} )
 			}
 		</div>
