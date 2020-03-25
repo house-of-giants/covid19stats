@@ -65,3 +65,33 @@ body {
 		box-shadow: 0 2.5em 0 0;
 	}
 }
+
+.arrow {
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+
+.arrow::after {
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	pointer-events: none;
+	border-color: rgba(213, 213, 213, 0);
+	border-width: 5px;
+	line-height: 0;
+	display: inline-block;
+	top: 50%;
+	margin-left: 5px;
+}
+
+.arrow.asc:after {
+	border-bottom-color: #d5d5d5;
+	transform: translateY(-20%);
+}
+
+.arrow.desc:after {
+	border-top-color: #d5d5d5;
+	transform: translateY(20%);
+}
