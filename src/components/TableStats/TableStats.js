@@ -110,7 +110,7 @@ const TableStats = () => {
 		const allStats = Array.from(document.querySelectorAll(`.countrystat[data-${data}]`))
 		const { by, sort } = order
 
-		if( sort === 'default' || sort === 'desc' ) {
+		if( ( by === data && ( sort === 'default' || sort === 'desc' )) || by !== data ) {
 			setOrder({
 				by: data,
 				sort: 'asc'
@@ -118,7 +118,7 @@ const TableStats = () => {
 			allStats.sort((a, b) => +b.dataset[data] - +a.dataset[data]).forEach(item => item.parentNode.appendChild(item))
 		}
 
-		if( sort === 'asc' ) {
+		if( by === data && sort === 'asc' ) {
 			setOrder({
 				by: data,
 				sort: 'desc'
